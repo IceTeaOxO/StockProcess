@@ -7,6 +7,7 @@ import '../../styles/tailwind.css'
 const KLineChart = () => {
   const [showMA, setShowMA] = useState(false);
   const [klineData, setKlineData] = useState([]);
+  const [tooltipContent, setTooltipContent] = useState('');
 
   // klineData
   useEffect(() => {
@@ -60,13 +61,11 @@ const KLineChart = () => {
         }
     
         const maValue = sum / dayCount;
-        result.push(maValue);
+        result.push(maValue.toFixed(2));
       }
     
       return result;
     };
-    
-
     const ma5 = calculateMA(5, klineData);
     const ma10 = calculateMA(10, klineData);
     const ma20 = calculateMA(20, klineData);
@@ -127,7 +126,6 @@ const KLineChart = () => {
           interval: 'auto', // 自动调整横轴刻度的间隔
         },
       },
-
       dataZoom: [
         {
           type: 'inside', // 内置的缩放区域
@@ -162,31 +160,33 @@ const KLineChart = () => {
           const high = item.data[4];
           const date = item.data[5];
 
-          let tooltipContent = `
+          let content = `
             日期: ${date} <br>
             開盤價: ${open} <br>
             收盤價: ${close} <br>
             最低價: ${low} <br>
             最高價: ${high}
           `;
-
+          let MAcontent = ''
+          // 檢查是否有 MA 數據
           if (showMA) {
-            tooltipContent += '<br>移動平均線:';
             for (let i = 1; i < params.length; i++) {
               const maItem = params[i];
               const maName = maItem.seriesName;
-              const maValue = maItem.data.toFixed(2);
-
-              tooltipContent += `<br>${maName}: ${maValue}`;
+              const maValue = maItem.data;
+              MAcontent += `&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${maName}: ${maValue}`;
             }
           }
 
-          return tooltipContent;
+          // 更新網頁上的元素
+          setTooltipContent(MAcontent);
+
+          return content;
 
         },
       },
       legend: {
-        data: ['MA5', 'MA10', 'MA20', 'MA60'],
+        data: ['5MA', '10MA', '20MA', '60MA'],
         bottom: 0,
       },
       series: getSeries(),
@@ -206,9 +206,19 @@ const KLineChart = () => {
   return (
     <div>
       <div id="kline-chart" style={{ width: '100%', height: '400px' }}></div>
-      <button className={`ma-toggle-btn ${showMA ? 'bg-red-500' : 'bg-green-500'}`} onClick={toggleMA}>
-        {showMA ? 'Hide MA' : 'Show MA'}
-      </button>
+      <button
+    className={`mt-4 py-2 px-4 rounded ${showMA ? 'bg-red-500 hover:bg-red-700' : 'bg-green-500 hover:bg-green-700'}`}
+    onClick={toggleMA}
+  >
+    {showMA ? 'Hide MA' : 'Show MA'}
+  </button>
+  <div
+  dangerouslySetInnerHTML={{ __html: tooltipContent }}
+  className="mt-4 p-4 border rounded shadow-md bg-white text-gray-800"
+></div>
+
+  
+      
       
     </div>
   );
