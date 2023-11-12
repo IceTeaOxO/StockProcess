@@ -77,14 +77,6 @@ const KLineChart = () => {
           type: 'candlestick',
           data: klineData,
           itemStyle: {
-            color: function (params) {
-              return params[0] <= params[1] ? '#ef232a' : '#14b143'; // 涨为红色，跌为绿色
-            },
-            color0: function (params) {
-              return params[0] <= params[1] ? '#ef232a' : '#14b143';
-            },
-            borderColor: '#ff6347', // 边框颜色
-            borderColor0: '#00ff7f',
           },
         },
       ];
