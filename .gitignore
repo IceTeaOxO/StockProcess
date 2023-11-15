@@ -7,7 +7,6 @@ __pycache__/
 *.so
 
 # Distribution / packaging
-test.py
 build/
 develop-eggs/
 dist/
@@ -163,3 +162,4 @@ react_stock/node_modules
 react_stock/package-lock.json
 react_stock/node_modules
 react_stock/package-lock.json
+test.py
