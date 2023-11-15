@@ -7,7 +7,8 @@ function App() {
     <div className="App">
       
       <main>
-        <Layout />
+        {/* <Layout /> */}
+        <KLineChart />
       </main>
     </div>
 
