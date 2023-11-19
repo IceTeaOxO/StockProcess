@@ -26,5 +26,46 @@ pip install backtesting
 # server design
 
 
+# run server
+pip install django
+django-admin startproject mysite
+python manage.py migrate
+python manage.py runserver
 
+## create app
+python manage.py startapp backtest
+urls.py
+config
+## create db
+python manage.py migrate
+## create model
+models.py
+class = table
+setting config
+python manage.py makemigrations backtest
+查看DB table
+python manage.py sqlmigrate backtest 0001
+模型更改步驟
+1. 更改model.py
+2. python manage.py makemigrations
+3. python manage.py migrate
 
+# API
+開啟shell使用python操作DB
+python manage.py shell
+```
+from django.utils import timezone
+q = Question(question_text="What's new?", pub_date=timezone.now())
+q.save()
+q.id
+q.question_text
+q.question_text = "What's up?"
+q.save()
+```
+
+# create superuser
+```
+python manage.py createsuperuser
+admin
+admin.site.register(Table)
+```
