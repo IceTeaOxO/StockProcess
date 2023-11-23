@@ -115,6 +115,8 @@ class TestStrategy(bt.Strategy):
 if __name__ == '__main__':
     # Create a cerebro entity
     cerebro = bt.Cerebro()
+    # cerebro = bt.Cerebro(runonce=True, preload=True)
+    
 
     # Add a strategy
     cerebro.addstrategy(TestStrategy)
